@@ -1016,10 +1016,15 @@ function renderLevelList(levels) {
   listEl.innerHTML = '';
 
   const query = (document.getElementById('classic-search-input')?.value || '').trim();
-  const filteredLevels = filterLevels(levels, query);
+  let filteredLevels = filterLevels(levels, query);
+  const useEngine = window.LevelListFilterEngine;
+  if (useEngine) {
+    filteredLevels = useEngine.apply(filteredLevels);
+  }
+  const showDividers = !useEngine || useEngine.isDefaultSort();
 
   if (!filteredLevels.length) {
-    listEl.innerHTML = (query || Object.keys(tagFilterStates).length)
+    listEl.innerHTML = (query || Object.keys(tagFilterStates).length || (useEngine && useEngine.hasActiveFilter()))
       ? '<p class="classic-level-empty">검색 조건에 맞는 레벨이 없습니다.</p>'
       : '<p class="classic-level-empty">등록된 레벨이 없습니다.</p>';
     return;
@@ -1034,16 +1039,18 @@ function renderLevelList(levels) {
     const originalIndex = cachedLevelsData.findIndex(l => l.id === level.id);
     const rankIndex = originalIndex !== -1 ? originalIndex : 0;
 
-    // Check Section Dividers based on rank index
-    if (rankIndex < 10 && !insertedMain) {
-      fragment.appendChild(createSectionDivider('main', 'MAIN LIST (1 ~ 10위)'));
-      insertedMain = true;
-    } else if (rankIndex >= 10 && rankIndex < 20 && !insertedExtended) {
-      fragment.appendChild(createSectionDivider('extended', 'EXTENDED LIST (11 ~ 20위)'));
-      insertedExtended = true;
-    } else if (rankIndex >= 20 && !insertedLegacy) {
-      fragment.appendChild(createSectionDivider('legacy', 'LEGACY LIST (21위~)'));
-      insertedLegacy = true;
+    // Check Section Dividers based on rank index (only in default rank sort)
+    if (showDividers) {
+      if (rankIndex < 10 && !insertedMain) {
+        fragment.appendChild(createSectionDivider('main', 'MAIN LIST (1 ~ 10위)'));
+        insertedMain = true;
+      } else if (rankIndex >= 10 && rankIndex < 20 && !insertedExtended) {
+        fragment.appendChild(createSectionDivider('extended', 'EXTENDED LIST (11 ~ 20위)'));
+        insertedExtended = true;
+      } else if (rankIndex >= 20 && !insertedLegacy) {
+        fragment.appendChild(createSectionDivider('legacy', 'LEGACY LIST (21위~)'));
+        insertedLegacy = true;
+      }
     }
 
     fragment.appendChild(createLevelCard(level, rankIndex, cachedLevelsData.length));
@@ -1183,6 +1190,7 @@ async function initClassicPage() {
   };
 
   window.addEventListener('devDataUpdated', loadClassicData);
+  window.addEventListener('levelSortFilterChanged', () => renderLevelList(cachedLevelsData));
   await loadClassicData();
 }
 

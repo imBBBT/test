@@ -649,20 +649,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
 
-      if (!confirm(`현재 모든 하디스트 랭킹 데이터를 GitHub (${config.owner}/${config.repo}의 hardest.json)에 자동으로 커밋 & 푸시하시겠습니까?`)) {
-        return;
-      }
+      sortHardestData(hardestData);
+      const commitMessage = await window.GitHubSyncEngine.confirmPushWithPreview({
+        targetLabel: 'hardest.json',
+        summaryLines: [
+          `등록된 유저 수: ${hardestData.length}명`,
+          hardestData[0] ? `1위: ${hardestData[0].name} — ${hardestData[0].hardest}` : '데이터 없음'
+        ],
+        defaultMessage: 'Update hardest rankings via DevTools'
+      });
+      if (!commitMessage) return;
 
       devGithubSyncBtn.disabled = true;
       const origText = devGithubSyncBtn.textContent;
-      devGithubSyncBtn.textContent = '동기화 중... ⏳';
+      devGithubSyncBtn.textContent = '동기화 중...';
 
       try {
-        sortHardestData(hardestData);
         const result = await window.GitHubSyncEngine.commitAndPush(
           'hardest.json',
           hardestData,
-          'Update hardest rankings via DevTools'
+          commitMessage
         );
 
         localStorage.removeItem('dev_custom_hardest');

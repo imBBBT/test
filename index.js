@@ -94,17 +94,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const refreshNewsUI = async () => {
     const news = await fetchNewsList();
 
-    // 메인 화면 업데이트
+    // 메인 화면 업데이트 (최신 날짜가 위로 오도록 정렬)
     if (mainNewsContainer) {
       mainNewsContainer.innerHTML = '';
       if (!news || news.length === 0) {
         mainNewsContainer.innerHTML = '<p class="news-empty-message">등록된 뉴스가 없습니다.</p>';
       } else {
-        news.forEach(item => {
+        const sortedNews = [...news].sort((a, b) =>
+          String(b?.date || '').localeCompare(String(a?.date || ''))
+        );
+        sortedNews.forEach(item => {
           const mainNewsItem = document.createElement('div');
           mainNewsItem.className = 'news-item';
           mainNewsItem.innerHTML = `<span class="news-date-tag">${item.date || ''}</span> ${parseColorTags(item.content || '')}`;
-          mainNewsContainer.prepend(mainNewsItem);
+          mainNewsContainer.appendChild(mainNewsItem);
         });
       }
     }
@@ -335,9 +338,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // 기존 항목 수정
         news[currentEditKey].content = content;
       } else {
-        // 새 항목 추가
+        // 새 항목 추가 (최신이 위로 오도록 unshift)
         const date = new Date().toISOString().split('T')[0];
-        news.push({ date, content });
+        news.unshift({ date, content });
       }
 
       await updateLocalNews(news);
@@ -357,19 +360,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const news = await fetchNewsList();
 
-      if (!confirm(`현재 뉴스 데이터(${news.length}건)를 GitHub (${config.owner}/${config.repo}의 news.json)에 자동으로 커밋 & 푸시하시겠습니까?`)) {
-        return;
-      }
+      const commitMessage = await window.GitHubSyncEngine.confirmPushWithPreview({
+        targetLabel: 'news.json',
+        summaryLines: [
+          `전체 뉴스 항목: ${news.length}건`,
+          news[0] ? `최신 뉴스: [${news[0].date || ''}] ${String(news[0].content || '').slice(0, 40)}` : '등록된 뉴스 없음'
+        ],
+        defaultMessage: 'Update news data via DevTools'
+      });
+      if (!commitMessage) return;
 
       devGithubSyncBtn.disabled = true;
       const origText = devGithubSyncBtn.textContent;
-      devGithubSyncBtn.textContent = '동기화 중... ⏳';
+      devGithubSyncBtn.textContent = '동기화 중...';
 
       try {
         const result = await window.GitHubSyncEngine.commitAndPush(
           'news.json',
           news,
-          'Update news data via DevTools'
+          commitMessage
         );
 
         localStorage.removeItem('dev_custom_news');

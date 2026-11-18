@@ -1486,6 +1486,82 @@ document.addEventListener('DOMContentLoaded', () => {
         commitSha: result.commit ? result.commit.sha : '',
         filePath: cleanPath
       };
+    },
+
+    confirmPushWithPreview({ targetLabel, summaryLines = [], defaultMessage = '' }) {
+      return new Promise((resolve) => {
+        const config = this.getConfig();
+        let overlay = document.getElementById('gh-preview-overlay');
+        if (!overlay) {
+          overlay = document.createElement('div');
+          overlay.id = 'gh-preview-overlay';
+          overlay.className = 'gh-preview-overlay';
+          overlay.innerHTML = `
+            <div class="gh-preview-box" role="dialog" aria-modal="true" aria-labelledby="gh-preview-title">
+              <h3 class="gh-preview-title" id="gh-preview-title">GitHub 동기화 미리보기</h3>
+              <div>
+                <span class="gh-preview-repo-pill" id="gh-preview-repo-pill"></span>
+              </div>
+              <div class="gh-preview-summary" id="gh-preview-summary"></div>
+              <div>
+                <label class="gh-preview-field-label" for="gh-preview-commit-input">커밋 메시지 (수정 가능)</label>
+                <input type="text" id="gh-preview-commit-input" class="gh-preview-commit-input" />
+              </div>
+              <div class="gh-preview-actions">
+                <button type="button" class="gh-preview-btn" id="gh-preview-cancel-btn">취소</button>
+                <button type="button" class="gh-preview-btn primary" id="gh-preview-confirm-btn">커밋 & 푸시</button>
+              </div>
+            </div>
+          `;
+          document.body.appendChild(overlay);
+        }
+
+        const repoPill = overlay.querySelector('#gh-preview-repo-pill');
+        const summaryEl = overlay.querySelector('#gh-preview-summary');
+        const inputEl = overlay.querySelector('#gh-preview-commit-input');
+        const cancelBtn = overlay.querySelector('#gh-preview-cancel-btn');
+        const confirmBtn = overlay.querySelector('#gh-preview-confirm-btn');
+
+        const isProdRepo = (config.repo || '').toLowerCase() === 'chochin-forum';
+        repoPill.className = `gh-preview-repo-pill ${isProdRepo ? 'is-prod' : ''}`;
+        repoPill.textContent = `${config.owner}/${config.repo} • ${targetLabel || ''}`;
+
+        const esc = window.escapeHtml || (s => String(s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+        summaryEl.innerHTML = (summaryLines && summaryLines.length > 0)
+          ? summaryLines.map(line => `<div>• ${esc(line)}</div>`).join('')
+          : `<div>• 대상 파일: ${esc(targetLabel || '')}</div>`;
+
+        inputEl.value = defaultMessage || `Update ${targetLabel || 'data'} via DevTools`;
+        overlay.classList.add('active');
+        setTimeout(() => inputEl.focus(), 60);
+
+        const cleanup = (val) => {
+          overlay.classList.remove('active');
+          cancelBtn.onclick = null;
+          confirmBtn.onclick = null;
+          overlay.onclick = null;
+          inputEl.onkeydown = null;
+          resolve(val);
+        };
+
+        cancelBtn.onclick = () => cleanup(null);
+        confirmBtn.onclick = () => {
+          const msg = inputEl.value.trim() || defaultMessage || 'Update data via DevTools';
+          cleanup(msg);
+        };
+        overlay.onclick = (e) => {
+          if (e.target === overlay) cleanup(null);
+        };
+        inputEl.onkeydown = (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            confirmBtn.click();
+          } else if (e.key === 'Escape') {
+            e.preventDefault();
+            cancelBtn.click();
+          }
+        };
+      });
     }
   };
 
@@ -1738,16 +1814,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      if (!confirm(`현재 ${modeName} 모드의 모든 레벨 및 클리어 데이터를 GitHub (${config.owner}/${config.repo}의 ${targetFilePath})에 자동으로 커밋 & 푸시하시겠습니까?`)) {
-        return;
-      }
-
       devGithubSyncBtn.disabled = true;
       const origText = devGithubSyncBtn.textContent;
-      devGithubSyncBtn.textContent = '동기화 중... ⏳';
+      devGithubSyncBtn.textContent = '검증 중...';
 
       try {
-        logDevConsole(`[GitHub] ${targetFilePath} 데이터 검증 및 푸시 시작...`, '#70a1ff');
+        logDevConsole(`[GitHub] ${targetFilePath} 데이터 검증 및 미리보기 준비...`, '#70a1ff');
 
         const jsonUrl = window.location.pathname.toLowerCase().includes('/level/') ? `${mode}.json` : `level/${mode}.json`;
         const res = await fetch(`${jsonUrl}?t=${Date.now()}`, { cache: 'no-store' });
@@ -1761,6 +1833,34 @@ document.addEventListener('DOMContentLoaded', () => {
           throw new Error('병합된 레벨 목록이 비어있어 데이터 유실 방지를 위해 동기화를 중단했습니다.');
         }
 
+        const customLevels = JSON.parse(localStorage.getItem(`dev_custom_levels_${mode}`) || '[]');
+        const customClears = JSON.parse(localStorage.getItem(`dev_custom_clears_${mode}`) || '{}');
+        const customClearCount = Object.values(customClears).reduce((acc, arr) => acc + (Array.isArray(arr) ? arr.length : 0), 0);
+        const pendingNewsRaw = localStorage.getItem('dev_custom_news');
+        const pendingNewsCount = pendingNewsRaw ? (JSON.parse(pendingNewsRaw) || []).length : 0;
+
+        const summaryLines = [
+          `전체 레벨 수: ${merged.levels.length}개 (원본 ${Array.isArray(json.levels) ? json.levels.length : 0}개)`,
+          `로컬 변경 레벨: ${customLevels.length}건 / 추가·수정 클리어: ${customClearCount}건`,
+          `히스토리 항목: ${merged.history.length}건`
+        ];
+        if (pendingNewsCount > 0) {
+          summaryLines.push(`함께 동기화될 뉴스(news.json): ${pendingNewsCount}건`);
+        }
+
+        const commitMessage = await window.GitHubSyncEngine.confirmPushWithPreview({
+          targetLabel: targetFilePath,
+          summaryLines,
+          defaultMessage: `Update ${modeName} levels & clears data via DevTools`
+        });
+
+        if (!commitMessage) {
+          logDevConsole('[GitHub] 사용자에 의해 동기화가 취소되었습니다.', '#ffe600');
+          return;
+        }
+
+        devGithubSyncBtn.textContent = '동기화 중...';
+
         const dataToPush = {
           levels: merged.levels,
           history: merged.history
@@ -1769,7 +1869,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await window.GitHubSyncEngine.commitAndPush(
           targetFilePath,
           dataToPush,
-          `Update ${modeName} levels & clears data via DevTools`
+          commitMessage
         );
 
         localStorage.removeItem(`dev_custom_levels_${mode}`);
@@ -1777,7 +1877,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem(`dev_custom_clears_${mode}`);
 
         // If there is pending auto/custom news, also sync news.json
-        const pendingNewsRaw = localStorage.getItem('dev_custom_news');
         if (pendingNewsRaw) {
           try {
             const parsedNews = JSON.parse(pendingNewsRaw);
@@ -2989,5 +3088,425 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initMobileBottomSheetGestures();
+
+  // ==========================================
+  // v2.1 Integrated Quick Search (Desktop & Mobile)
+  // ==========================================
+  function initQuickSearch() {
+    const header = document.querySelector('.header');
+    if (!header || header.querySelector('.header-search-btn')) return;
+
+    const isSubLevel = (window.location.pathname || '').replace(/\\/g, '/').toLowerCase().includes('/level/');
+    const prefix = isSubLevel ? '../' : '';
+
+    const searchBtn = document.createElement('button');
+    searchBtn.type = 'button';
+    searchBtn.className = 'header-search-btn';
+    searchBtn.setAttribute('aria-label', '통합 빠른 검색');
+    searchBtn.title = '통합 빠른 검색 (/ 또는 Ctrl+K)';
+    searchBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+        <path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+      </svg>
+      <span class="search-text-label">검색</span>
+      <span class="search-kbd-hint">/</span>
+    `;
+
+    const optBtn = header.querySelector('.optionbutton');
+    if (optBtn) {
+      header.insertBefore(searchBtn, optBtn);
+    } else {
+      header.appendChild(searchBtn);
+    }
+
+    const overlay = document.createElement('div');
+    overlay.id = 'quick-search-overlay';
+    overlay.className = 'quick-search-overlay';
+    overlay.innerHTML = `
+      <div class="quick-search-box" role="dialog" aria-modal="true" aria-label="통합 빠른 검색">
+        <div class="quick-search-input-row">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          </svg>
+          <input type="search" id="quick-search-input" class="quick-search-input" placeholder="레벨, 제작자, 유저, 맵 팩 검색..." autocomplete="off" autocorrect="off" spellcheck="false" />
+          <button type="button" id="quick-search-close-btn" class="quick-search-close-btn">닫기</button>
+        </div>
+        <div class="quick-search-filters" id="quick-search-filters">
+          <button type="button" class="quick-search-filter-chip active" data-type="all">전체</button>
+          <button type="button" class="quick-search-filter-chip" data-type="level">레벨</button>
+          <button type="button" class="quick-search-filter-chip" data-type="player">유저</button>
+          <button type="button" class="quick-search-filter-chip" data-type="pack">맵 팩</button>
+        </div>
+        <div class="quick-search-results" id="quick-search-results">
+          <div class="quick-search-empty">검색어를 입력하면 레벨, 유저, 맵 팩을 바로 찾을 수 있습니다.</div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const inputEl = overlay.querySelector('#quick-search-input');
+    const closeBtn = overlay.querySelector('#quick-search-close-btn');
+    const resultsEl = overlay.querySelector('#quick-search-results');
+    const filterChips = overlay.querySelectorAll('.quick-search-filter-chip');
+
+    let activeType = 'all';
+    let selectedIdx = -1;
+    let searchIndex = null;
+    let loadingPromise = null;
+
+    async function buildSearchIndex() {
+      if (searchIndex) return searchIndex;
+      if (loadingPromise) return loadingPromise;
+
+      loadingPromise = (async () => {
+        const items = [];
+        try {
+          const { classicLevels, challengeLevels, platformerLevels } = await window.calculateAllPlayerPoints();
+          const playerMap = new Map();
+
+          const registerPlayer = (name, modeLabel, levelTitle) => {
+            const trimmed = String(name || '').trim();
+            if (!trimmed) return;
+            const key = trimmed.toLowerCase();
+            if (!playerMap.has(key)) {
+              playerMap.set(key, { name: trimmed, clears: 0, hardest: '' });
+            }
+            const entry = playerMap.get(key);
+            entry.clears += 1;
+            if (!entry.hardest) entry.hardest = `${modeLabel}: ${levelTitle}`;
+          };
+
+          const addModeLevels = (levels, mode, label) => {
+            (levels || []).forEach((lvl, idx) => {
+              const rank = idx + 1;
+              items.push({
+                kind: 'level',
+                mode,
+                badge: `${label} #${rank}`,
+                badgeClass: `mode-${mode}`,
+                title: lvl.title || 'Untitled',
+                sub: `by ${lvl.creator || '-'}${lvl.verifier ? ` · Verifier: ${lvl.verifier}` : ''}`,
+                searchBlob: `${lvl.title || ''} ${lvl.creator || ''} ${lvl.verifier || ''} #${rank} ${lvl.map?.mapId || lvl.mapId || ''} ${(lvl.tags || []).join(' ')}`.toLowerCase(),
+                url: `${prefix}level/${mode}.html?id=${encodeURIComponent(lvl.id != null ? lvl.id : rank)}`
+              });
+              registerPlayer(lvl.verifier, label, lvl.title);
+              (lvl.clears || []).forEach(c => registerPlayer(c.player || c.name || c.user, label, lvl.title));
+            });
+          };
+
+          addModeLevels(classicLevels, 'classic', 'Classic');
+          addModeLevels(challengeLevels, 'challenge', 'Challenge');
+          addModeLevels(platformerLevels, 'platformer', 'Platformer');
+
+          const [packRes, hardestRes] = await Promise.all([
+            fetch(`${prefix}mappack.json?t=${Date.now()}`, { cache: 'no-store' }).then(r => r.ok ? r.json() : { packs: [] }).catch(() => ({ packs: [] })),
+            fetch(`${prefix}hardest.json?t=${Date.now()}`, { cache: 'no-store' }).then(r => r.ok ? r.json() : []).catch(() => [])
+          ]);
+
+          if (Array.isArray(hardestRes)) {
+            hardestRes.forEach(h => {
+              const name = String(h?.name || '').trim();
+              if (!name) return;
+              const key = name.toLowerCase();
+              const existing = playerMap.get(key);
+              if (existing) {
+                existing.hardest = h.hardest || existing.hardest;
+              } else {
+                playerMap.set(key, { name, clears: 0, hardest: h.hardest || '' });
+              }
+            });
+          }
+
+          playerMap.forEach((info) => {
+            items.push({
+              kind: 'player',
+              badge: '유저',
+              badgeClass: 'mode-player',
+              title: info.name,
+              sub: `${info.clears > 0 ? `클리어/베리파이 ${info.clears}건` : '하디스트 등록 유저'}${info.hardest ? ` · ${info.hardest}` : ''}`,
+              searchBlob: `${info.name} ${info.hardest || ''}`.toLowerCase(),
+              url: `${prefix}ranking.html`
+            });
+          });
+
+          const packs = Array.isArray(packRes) ? packRes : (packRes.packs || []);
+          packs.forEach(p => {
+            const lvlNames = (p.levels || []).map(l => typeof l === 'string' ? l : (l.name || l.title || '')).join(', ');
+            items.push({
+              kind: 'pack',
+              badge: p.tier || '맵 팩',
+              badgeClass: 'mode-pack',
+              title: p.title || 'Untitled Pack',
+              sub: `${(p.levels || []).length}개 레벨${lvlNames ? ` · ${lvlNames}` : ''}`,
+              searchBlob: `${p.title || ''} ${p.tier || ''} ${lvlNames}`.toLowerCase(),
+              url: `${prefix}maps.html`
+            });
+          });
+        } catch (err) {
+          console.warn('Quick search index error:', err);
+        }
+        searchIndex = items;
+        return items;
+      })();
+
+      return loadingPromise;
+    }
+
+    function renderResults() {
+      const q = (inputEl.value || '').trim().toLowerCase();
+      if (!searchIndex) {
+        resultsEl.innerHTML = '<div class="quick-search-empty">데이터를 불러오는 중...</div>';
+        return;
+      }
+
+      let filtered = searchIndex.filter(it => activeType === 'all' || it.kind === activeType);
+      if (q) {
+        filtered = filtered.filter(it => it.searchBlob.includes(q));
+      } else {
+        filtered = filtered.slice(0, 15);
+      }
+
+      const top = filtered.slice(0, 30);
+      selectedIdx = top.length > 0 ? 0 : -1;
+
+      if (top.length === 0) {
+        resultsEl.innerHTML = '<div class="quick-search-empty">일치하는 검색 결과가 없습니다.</div>';
+        return;
+      }
+
+      const esc = window.escapeHtml || (s => String(s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+      resultsEl.innerHTML = top.map((it, idx) => `
+        <a href="${it.url}" class="quick-search-item${idx === 0 ? ' is-selected' : ''}" data-idx="${idx}">
+          <div class="quick-search-item-main">
+            <span class="quick-search-item-title">${esc(it.title)}</span>
+            <span class="quick-search-item-sub">${esc(it.sub)}</span>
+          </div>
+          <span class="quick-search-badge ${it.badgeClass}">${esc(it.badge)}</span>
+        </a>
+      `).join('');
+    }
+
+    async function openQuickSearch() {
+      overlay.classList.add('active');
+      setTimeout(() => inputEl.focus(), 40);
+      await buildSearchIndex();
+      renderResults();
+    }
+
+    function closeQuickSearch() {
+      overlay.classList.remove('active');
+    }
+
+    searchBtn.addEventListener('click', openQuickSearch);
+    closeBtn.addEventListener('click', closeQuickSearch);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeQuickSearch();
+    });
+
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        activeType = chip.dataset.type || 'all';
+        renderResults();
+      });
+    });
+
+    inputEl.addEventListener('input', renderResults);
+
+    inputEl.addEventListener('keydown', (e) => {
+      const items = resultsEl.querySelectorAll('.quick-search-item');
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeQuickSearch();
+        return;
+      }
+      if (items.length === 0) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectedIdx = (selectedIdx + 1) % items.length;
+        items.forEach((el, i) => el.classList.toggle('is-selected', i === selectedIdx));
+        items[selectedIdx].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectedIdx = (selectedIdx - 1 + items.length) % items.length;
+        items.forEach((el, i) => el.classList.toggle('is-selected', i === selectedIdx));
+        items[selectedIdx].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter' && selectedIdx >= 0 && items[selectedIdx]) {
+        e.preventDefault();
+        window.location.href = items[selectedIdx].getAttribute('href');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      const isTyping = tag === 'input' || tag === 'textarea' || tag === 'select' || document.activeElement?.isContentEditable;
+      if (((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') || (!isTyping && e.key === '/')) {
+        e.preventDefault();
+        if (overlay.classList.contains('active')) {
+          closeQuickSearch();
+        } else {
+          openQuickSearch();
+        }
+      }
+    });
+  }
+
+  initQuickSearch();
+
+  // ==========================================
+  // v2.1 Level List Sort & Advanced Filter Bar
+  // ==========================================
+  window.LevelListFilterEngine = (function () {
+    let sortMode = 'rank';
+    let statusFilter = 'all'; // 'all' | 'cleared' | 'uncleared' | 'fp'
+    let lengthFilter = 'all';
+    let initialized = false;
+
+    function parseNum(val) {
+      if (val == null) return 0;
+      const n = parseInt(String(val).replace(/[^0-9]/g, ''), 10);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function getFullClearCount(lvl) {
+      const clears = Array.isArray(lvl?.clears) ? lvl.clears : [];
+      return clears.filter(c => {
+        if (!c) return false;
+        if (c.percent == null) return true;
+        const p = parseFloat(String(c.percent).replace(/[^0-9.]/g, ''));
+        return !isNaN(p) && p >= 100;
+      }).length;
+    }
+
+    function isClearedByCurrentUser(lvl) {
+      const nick = (localStorage.getItem('forumNickname') || '').trim().toLowerCase();
+      if (!nick || !lvl) return false;
+      if ((lvl.verifier || '').trim().toLowerCase() === nick) return true;
+      const clears = Array.isArray(lvl.clears) ? lvl.clears : [];
+      return clears.some(c => {
+        if (!c) return false;
+        const pName = (c.player || c.name || c.user || '').trim().toLowerCase();
+        if (pName !== nick) return false;
+        if (c.percent == null) return true;
+        const p = parseFloat(String(c.percent).replace(/[^0-9.]/g, ''));
+        return !isNaN(p) && p >= 100;
+      });
+    }
+
+    function hasFramePerfect(lvl) {
+      if (!lvl || !lvl.framePerfect) return false;
+      if (Number(lvl.framePerfect.total) > 0) return true;
+      const fps = lvl.framePerfect.fps || {};
+      return Object.values(fps).some(v => Number(v) > 0);
+    }
+
+    function matchesLength(lvl, targetLen) {
+      if (targetLen === 'all') return true;
+      const raw = String(lvl?.map?.length || lvl?.length || '').toLowerCase();
+      if (targetLen === 'plat') return raw.includes('plat');
+      return raw.includes(targetLen);
+    }
+
+    function init() {
+      if (initialized) return;
+      const tagSection = document.querySelector('.classic-tag-filter-section');
+      if (!tagSection || document.getElementById('level-sort-filter-bar')) return;
+      initialized = true;
+
+      const bar = document.createElement('div');
+      bar.id = 'level-sort-filter-bar';
+      bar.className = 'level-sort-filter-bar';
+      bar.innerHTML = `
+        <select id="level-sort-select" class="level-sf-select" aria-label="레벨 정렬">
+          <option value="rank">기본 순위순</option>
+          <option value="clears-desc">클리어 많은 순</option>
+          <option value="clears-asc">클리어 적은 순</option>
+          <option value="objects-desc">오브젝트 많은 순</option>
+        </select>
+        <select id="level-length-select" class="level-sf-select" aria-label="레벨 길이 필터">
+          <option value="all">전체 길이</option>
+          <option value="tiny">Tiny</option>
+          <option value="short">Short</option>
+          <option value="medium">Medium</option>
+          <option value="long">Long</option>
+          <option value="xl">XL</option>
+          <option value="plat">Platformer</option>
+        </select>
+        <div class="level-sf-chips" role="group" aria-label="상태 필터">
+          <button type="button" class="level-sf-chip active" data-sf="all">전체</button>
+          <button type="button" class="level-sf-chip" data-sf="cleared">내가 깬 맵</button>
+          <button type="button" class="level-sf-chip" data-sf="uncleared">안 깬 맵</button>
+          <button type="button" class="level-sf-chip" data-sf="fp">FP 있음</button>
+        </div>
+      `;
+
+      tagSection.parentNode.insertBefore(bar, tagSection);
+
+      const sortSelect = bar.querySelector('#level-sort-select');
+      const lengthSelect = bar.querySelector('#level-length-select');
+      const chips = bar.querySelectorAll('.level-sf-chip');
+
+      const notify = () => {
+        window.dispatchEvent(new CustomEvent('levelSortFilterChanged'));
+      };
+
+      sortSelect.addEventListener('change', () => {
+        sortMode = sortSelect.value;
+        notify();
+      });
+
+      lengthSelect.addEventListener('change', () => {
+        lengthFilter = lengthSelect.value;
+        notify();
+      });
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          statusFilter = chip.dataset.sf || 'all';
+          notify();
+        });
+      });
+    }
+
+    return {
+      init,
+      isDefaultSort() {
+        return sortMode === 'rank';
+      },
+      hasActiveFilter() {
+        return statusFilter !== 'all' || lengthFilter !== 'all' || sortMode !== 'rank';
+      },
+      apply(levels) {
+        init();
+        let list = Array.isArray(levels) ? [...levels] : [];
+
+        if (statusFilter === 'cleared') {
+          list = list.filter(isClearedByCurrentUser);
+        } else if (statusFilter === 'uncleared') {
+          list = list.filter(l => !isClearedByCurrentUser(l));
+        } else if (statusFilter === 'fp') {
+          list = list.filter(hasFramePerfect);
+        }
+
+        if (lengthFilter !== 'all') {
+          list = list.filter(l => matchesLength(l, lengthFilter));
+        }
+
+        if (sortMode === 'clears-desc') {
+          list.sort((a, b) => getFullClearCount(b) - getFullClearCount(a));
+        } else if (sortMode === 'clears-asc') {
+          list.sort((a, b) => getFullClearCount(a) - getFullClearCount(b));
+        } else if (sortMode === 'objects-desc') {
+          list.sort((a, b) => parseNum(b?.map?.objects || b?.objects) - parseNum(a?.map?.objects || a?.objects));
+        }
+
+        return list;
+      }
+    };
+  })();
 });
 

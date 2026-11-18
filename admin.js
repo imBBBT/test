@@ -634,18 +634,25 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      if (!confirm(`Classic, Challenge, Platformer 레벨 데이터를 GitHub (${config.owner}/${config.repo})에 자동으로 커밋 & 푸시하시겠습니까?`)) {
-        return;
-      }
+      const commitMessage = await window.GitHubSyncEngine.confirmPushWithPreview({
+        targetLabel: 'level/*.json 일괄 동기화',
+        summaryLines: [
+          `Classic 레벨: ${siteData.classic.levels.length}개`,
+          `Challenge 레벨: ${siteData.challenge.levels.length}개`,
+          `Platformer 레벨: ${siteData.platformer.levels.length}개`
+        ],
+        defaultMessage: 'Update levels via Admin Portal'
+      });
+      if (!commitMessage) return;
 
       ghSyncAllBtn.disabled = true;
       const origText = ghSyncAllBtn.textContent;
       ghSyncAllBtn.textContent = 'GitHub 동기화 진행 중...';
 
       try {
-        await window.GitHubSyncEngine.commitAndPush('level/classic.json', siteData.classic, 'Update classic levels via Admin Portal');
-        await window.GitHubSyncEngine.commitAndPush('level/challenge.json', siteData.challenge, 'Update challenge levels via Admin Portal');
-        await window.GitHubSyncEngine.commitAndPush('level/platformer.json', siteData.platformer, 'Update platformer levels via Admin Portal');
+        await window.GitHubSyncEngine.commitAndPush('level/classic.json', siteData.classic, `${commitMessage} (classic)`);
+        await window.GitHubSyncEngine.commitAndPush('level/challenge.json', siteData.challenge, `${commitMessage} (challenge)`);
+        await window.GitHubSyncEngine.commitAndPush('level/platformer.json', siteData.platformer, `${commitMessage} (platformer)`);
 
         const pendingNewsRaw = localStorage.getItem('dev_custom_news');
         if (pendingNewsRaw) {

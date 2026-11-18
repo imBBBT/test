@@ -1006,19 +1006,24 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      if (!confirm(`현재 모든 맵 팩 데이터를 GitHub (${config.owner}/${config.repo}의 mappack.json)에 자동으로 커밋 & 푸시하시겠습니까?`)) {
-        return;
-      }
+      const commitMessage = await window.GitHubSyncEngine.confirmPushWithPreview({
+        targetLabel: 'mappack.json',
+        summaryLines: [
+          `전체 맵 팩 수: ${allPacks.length}개`
+        ],
+        defaultMessage: 'Update mappacks data via DevTools'
+      });
+      if (!commitMessage) return;
 
       devGithubSyncBtn.disabled = true;
       const origText = devGithubSyncBtn.textContent;
-      devGithubSyncBtn.textContent = '동기화 중... ⏳';
+      devGithubSyncBtn.textContent = '동기화 중...';
 
       try {
         const result = await window.GitHubSyncEngine.commitAndPush(
           'mappack.json',
           { packs: allPacks },
-          'Update mappacks data via DevTools'
+          commitMessage
         );
 
         localStorage.removeItem('dev_custom_mappacks');
