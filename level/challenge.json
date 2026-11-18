@@ -675,14 +675,196 @@
       "type": "add",
       "title": "DARKNESS",
       "detail": "\"DARKNESS\" 새로운 레벨이 3위에 등록되었습니다.",
-      "time": "2026. 10. 18."
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840918,
+      "type": "move",
+      "title": "LT Tresure",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 16위에서 17위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840917,
+      "type": "move",
+      "title": "JP Challenge 5",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 15위에서 16위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840916,
+      "type": "move",
+      "title": "Swimming Wave",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 14위에서 15위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840915,
+      "type": "move",
+      "title": "JP Challenge 4",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 13위에서 14위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840914,
+      "type": "move",
+      "title": "JP Challenge 1",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 12위에서 13위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840913,
+      "type": "move",
+      "title": "Cube Cafe",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 11위에서 12위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840912,
+      "type": "move",
+      "title": "Funny Duel",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 10위에서 11위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840911,
+      "type": "move",
+      "title": "Furry Wave",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 9위에서 10위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840910,
+      "type": "move",
+      "title": "Jiter Click 2",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 8위에서 9위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840909,
+      "type": "move",
+      "title": "NABI",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 7위에서 8위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840908,
+      "type": "move",
+      "title": "Blink",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 6위에서 7위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840907,
+      "type": "move",
+      "title": "B1TCH",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 5위에서 6위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840906,
+      "type": "move",
+      "title": "Solution",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 4위에서 5위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
+    },
+    {
+      "id": 1792300840905,
+      "type": "move",
+      "title": "404",
+      "detail": "'DARKNESS' 레벨 추가로 인해 순위가 3위에서 4위로 하락하였습니다.",
+      "time": "2026-10-18 14:20"
     },
     {
       "id": 1786959100976,
       "type": "add",
       "title": "Solution",
       "detail": "\"Solution\" 새로운 레벨이 4위에 등록되었습니다.",
-      "time": "2026. 8. 17."
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100975,
+      "type": "move",
+      "title": "LT Tresure",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 15위에서 16위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100974,
+      "type": "move",
+      "title": "JP Challenge 5",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 14위에서 15위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100973,
+      "type": "move",
+      "title": "Swimming Wave",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 13위에서 14위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100972,
+      "type": "move",
+      "title": "JP Challenge 4",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 12위에서 13위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100971,
+      "type": "move",
+      "title": "JP Challenge 1",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 11위에서 12위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100970,
+      "type": "move",
+      "title": "Cube Cafe",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 10위에서 11위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100969,
+      "type": "move",
+      "title": "Funny Duel",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 9위에서 10위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100968,
+      "type": "move",
+      "title": "Furry Wave",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 8위에서 9위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100967,
+      "type": "move",
+      "title": "Jiter Click 2",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 7위에서 8위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100966,
+      "type": "move",
+      "title": "NABI",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 6위에서 7위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100965,
+      "type": "move",
+      "title": "Blink",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 5위에서 6위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
+    },
+    {
+      "id": 1786959100964,
+      "type": "move",
+      "title": "B1TCH",
+      "detail": "'Solution' 레벨 추가로 인해 순위가 4위에서 5위로 하락하였습니다.",
+      "time": "2026-08-17 18:31"
     },
     {
       "time": "2026-08-14 14:05",

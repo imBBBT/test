@@ -1609,6 +1609,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  window.parseHistoryTimeMs = function (t) {
+    const m = String(t || '').match(/(\d{4})\D+(\d{1,2})\D+(\d{1,2})(?:\D+(\d{1,2})\D+(\d{1,2}))?/);
+    if (!m) return 0;
+    return new Date(+m[1], +m[2] - 1, +m[3], +(m[4] || 0), +(m[5] || 0)).getTime();
+  };
+
+  window.formatHistoryTimestamp = function (d = new Date()) {
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  };
+
   window.applyDevCustomData = function (jsonLevels, jsonHistory, modeKey) {
     try {
       const recentPushed = window.GitHubSyncEngine?.getRecentPushedData
@@ -1693,7 +1704,12 @@ document.addEventListener('DOMContentLoaded', () => {
         level.clears.sort((a, b) => (b.percent || 100) - (a.percent || 100));
       });
 
-      history.sort((a, b) => (b.id || 0) - (a.id || 0));
+      history.sort((a, b) => {
+        const ta = window.parseHistoryTimeMs(a?.time);
+        const tb = window.parseHistoryTimeMs(b?.time);
+        if (tb !== ta) return tb - ta;
+        return (b?.id || 0) - (a?.id || 0);
+      });
 
       return { levels, history };
     } catch (e) {
@@ -2532,14 +2548,10 @@ document.addEventListener('DOMContentLoaded', () => {
         clears: []
       };
 
-      const todayStr = new Date().toLocaleDateString('ko-KR');
-      const newHistoryObj = {
-        id: Date.now(),
-        type: 'add',
-        title: title,
-        detail: `"${title}" 새로운 레벨이 ${rank}위에 등록되었습니다.`,
-        time: todayStr
-      };
+      const nowTs = Date.now();
+      const todayStr = window.formatHistoryTimestamp();
+      const currentLevelsSnapshot = window.cachedLevelsData || [];
+      const insertPos = Math.max(1, Math.min(currentLevelsSnapshot.length + 1, rank));
 
       const storageKeyLevels = `dev_custom_levels_${mode}`;
       const storageKeyHistory = `dev_custom_history_${mode}`;
@@ -2548,7 +2560,30 @@ document.addEventListener('DOMContentLoaded', () => {
       const existingHistory = JSON.parse(localStorage.getItem(storageKeyHistory) || '[]');
 
       existingLevels.push(newLevelObj);
-      existingHistory.unshift(newHistoryObj);
+
+      const batchHistory = [{
+        id: nowTs,
+        type: 'add',
+        title: title,
+        detail: `${insertPos}위에 새로운 레벨이 등록되었습니다.`,
+        time: todayStr
+      }];
+
+      if (mode === getCurrentPageMode()) {
+        for (let i = insertPos - 1; i < currentLevelsSnapshot.length; i++) {
+          const shifted = currentLevelsSnapshot[i];
+          if (!shifted || !shifted.title) continue;
+          batchHistory.push({
+            id: nowTs - 1 - (i - (insertPos - 1)),
+            type: 'move',
+            title: shifted.title,
+            detail: `'${title}' 레벨 추가로 인해 순위가 ${i + 1}위에서 ${i + 2}위로 하락하였습니다.`,
+            time: todayStr
+          });
+        }
+      }
+
+      existingHistory.unshift(...batchHistory);
 
       localStorage.setItem(storageKeyLevels, JSON.stringify(existingLevels));
       localStorage.setItem(storageKeyHistory, JSON.stringify(existingHistory));
@@ -2698,15 +2733,44 @@ document.addEventListener('DOMContentLoaded', () => {
       const oldRank = oldIdx !== -1 ? oldIdx + 1 : newRank;
 
       if (oldRank !== newRank) {
-        const todayStr = new Date().toLocaleDateString('ko-KR');
+        const nowTs = Date.now();
+        const todayStr = window.formatHistoryTimestamp();
         const direction = newRank < oldRank ? '상승' : '하락';
-        existingHistory.unshift({
-          id: Date.now(),
-          type: 'move',
+        const batchHistory = [{
+          id: nowTs,
+          type: 'reeval',
           title: title,
-          detail: `"${title}" 레벨 순위가 ${oldRank}위에서 ${newRank}위로 변경되었습니다.`,
+          detail: `'${title}' 레벨의 재평가로 인해 순위가 ${oldRank}위에서 ${newRank}위로 ${direction}하였습니다.`,
           time: todayStr
-        });
+        }];
+
+        if (newRank < oldRank) {
+          for (let i = newRank - 1; i < oldRank - 1; i++) {
+            const shifted = levels[i];
+            if (!shifted || !shifted.title) continue;
+            batchHistory.push({
+              id: nowTs - 1 - (i - (newRank - 1)),
+              type: 'move',
+              title: shifted.title,
+              detail: `'${title}' 레벨의 순위 변동으로 인해 순위가 ${i + 1}위에서 ${i + 2}위로 하락하였습니다.`,
+              time: todayStr
+            });
+          }
+        } else {
+          for (let i = oldRank; i < newRank; i++) {
+            const shifted = levels[i];
+            if (!shifted || !shifted.title) continue;
+            batchHistory.push({
+              id: nowTs - 1 - (i - oldRank),
+              type: 'move',
+              title: shifted.title,
+              detail: `'${title}' 레벨의 순위 변동으로 인해 순위가 ${i + 1}위에서 ${i}위로 상승하였습니다.`,
+              time: todayStr
+            });
+          }
+        }
+
+        existingHistory.unshift(...batchHistory);
 
         // 레벨 순위 변동 자동 뉴스 생성
         const newsContent = `${title}의 순위가 ${oldRank}위에서 ${newRank}위로 ${direction}했습니다.`;
@@ -2747,14 +2811,34 @@ document.addEventListener('DOMContentLoaded', () => {
         existingLevels.push({ id: isNaN(Number(val)) ? val : Number(val), title: title, isDeleted: true });
       }
 
-      const todayStr = new Date().toLocaleDateString('ko-KR');
-      existingHistory.unshift({
-        id: Date.now(),
+      const levels = window.cachedLevelsData || [];
+      const delIdx = levels.findIndex((l, i) => String(l.id || i) === String(val) || String(l.title).toLowerCase() === title.toLowerCase());
+      const delRank = delIdx !== -1 ? delIdx + 1 : null;
+      const nowTs = Date.now();
+      const todayStr = window.formatHistoryTimestamp();
+      const batchHistory = [{
+        id: nowTs,
         type: 'remove',
         title: title,
-        detail: `"${title}" 레벨이 삭제되었습니다.`,
+        detail: delRank ? `${delRank}위에 있던 레벨이 삭제되었습니다.` : `"${title}" 레벨이 삭제되었습니다.`,
         time: todayStr
-      });
+      }];
+
+      if (delIdx !== -1) {
+        for (let i = delIdx + 1; i < levels.length; i++) {
+          const shifted = levels[i];
+          if (!shifted || !shifted.title) continue;
+          batchHistory.push({
+            id: nowTs - 1 - (i - (delIdx + 1)),
+            type: 'move',
+            title: shifted.title,
+            detail: `'${title}' 레벨 삭제로 인해 순위가 ${i + 1}위에서 ${i}위로 상승하였습니다.`,
+            time: todayStr
+          });
+        }
+      }
+
+      existingHistory.unshift(...batchHistory);
 
       localStorage.setItem(storageKeyLevels, JSON.stringify(existingLevels));
       localStorage.setItem(storageKeyHistory, JSON.stringify(existingHistory));
@@ -3454,6 +3538,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!tagSection || document.getElementById('level-sort-filter-bar')) return;
       initialized = true;
 
+      const pagePath = (window.location.pathname || '').toLowerCase();
+      const isChallengePage = pagePath.includes('challenge');
+      const isClassicPage = pagePath.includes('classic');
+
+      const lengthSelectHtml = isChallengePage
+        ? ''
+        : `<select id="level-length-select" class="level-sf-select" aria-label="레벨 길이 필터">
+          <option value="all">전체 길이</option>
+          ${isClassicPage ? '' : '<option value="tiny">Tiny (~19초)</option>'}
+          <option value="short">Short (20~29초)</option>
+          <option value="medium">Medium (30~59초)</option>
+          <option value="long">Long (1~2분)</option>
+          <option value="xl">XL (2분~)</option>
+        </select>`;
+
       const bar = document.createElement('div');
       bar.id = 'level-sort-filter-bar';
       bar.className = 'level-sort-filter-bar';
@@ -3464,14 +3563,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <option value="clears-asc">클리어 적은 순</option>
           <option value="objects-desc">오브젝트 많은 순</option>
         </select>
-        <select id="level-length-select" class="level-sf-select" aria-label="레벨 길이 필터">
-          <option value="all">전체 길이</option>
-          <option value="tiny">Tiny (~19초)</option>
-          <option value="short">Short (20~29초)</option>
-          <option value="medium">Medium (30~59초)</option>
-          <option value="long">Long (1~2분)</option>
-          <option value="xl">XL (2분~)</option>
-        </select>
+        ${lengthSelectHtml}
         <div class="level-sf-chips" role="group" aria-label="상태 필터">
           <button type="button" class="level-sf-chip active" data-sf="all">전체</button>
           <button type="button" class="level-sf-chip" data-sf="cleared">내가 깬 맵</button>
@@ -3495,10 +3587,12 @@ document.addEventListener('DOMContentLoaded', () => {
         notify();
       });
 
-      lengthSelect.addEventListener('change', () => {
-        lengthFilter = lengthSelect.value;
-        notify();
-      });
+      if (lengthSelect) {
+        lengthSelect.addEventListener('change', () => {
+          lengthFilter = lengthSelect.value;
+          notify();
+        });
+      }
 
       chips.forEach(chip => {
         chip.addEventListener('click', () => {

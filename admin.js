@@ -457,14 +457,28 @@ document.addEventListener('DOMContentLoaded', () => {
         lvl.id = idx + 1;
       });
 
-      // 히스토리 항목 추가
-      const newHistoryEntry = {
-        time: todayStr,
+      // 히스토리 항목 추가 (연쇄 이동 포함)
+      const nowTs = Date.now();
+      const histTimeStr = window.formatHistoryTimestamp ? window.formatHistoryTimestamp() : todayStr;
+      const batchHistory = [{
+        id: nowTs,
+        time: histTimeStr,
         type: 'add',
         title: d.title,
         detail: historyDetail
-      };
-      history.unshift(newHistoryEntry);
+      }];
+      for (let i = insertIdx + 1; i < levels.length; i++) {
+        const shifted = levels[i];
+        if (!shifted || !shifted.title) continue;
+        batchHistory.push({
+          id: nowTs - 1 - (i - (insertIdx + 1)),
+          time: histTimeStr,
+          type: 'move',
+          title: shifted.title,
+          detail: `'${d.title}' 레벨 추가로 인해 순위가 ${i}위에서 ${i + 1}위로 하락하였습니다.`
+        });
+      }
+      history.unshift(...batchHistory);
 
       // 신청서 상태 업데이트
       item.status = 'approved';

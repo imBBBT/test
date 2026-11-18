@@ -47,7 +47,7 @@ function parseRankChange(item) {
     }
   }
 
-  const newMatch = detail.match(/(\d+)위에\s*새로운/);
+  const newMatch = detail.match(/(\d+)위에/);
   if (type === 'add' || newMatch || detail.includes('등록')) {
     const rankNum = newMatch ? `#${newMatch[1]}` : 'NEW';
     return {
@@ -816,7 +816,13 @@ function renderLevelDetail(level, rank, detailContainer) {
     </div>
 
     ${(() => {
-      const levelHistory = cachedHistoryData.filter(h => h.title && String(h.title).trim().toLowerCase() === String(level.title).trim().toLowerCase());
+      const levelHistory = cachedHistoryData
+        .filter(h => h.title && String(h.title).trim().toLowerCase() === String(level.title).trim().toLowerCase())
+        .sort((a, b) => {
+          const parseT = window.parseHistoryTimeMs || (t => 0);
+          const diff = parseT(b?.time) - parseT(a?.time);
+          return diff !== 0 ? diff : (b?.id || 0) - (a?.id || 0);
+        });
       const peakRank = getLevelPeakRank(level, rankNum, cachedHistoryData);
       const peakRankBadgeHtml = peakRank ? `
             <span class="detail-history-peak-badge peak-rank-${peakRank}">

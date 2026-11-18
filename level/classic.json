@@ -2623,198 +2623,562 @@
       "type": "move",
       "title": "BOOBAWAVEBA",
       "detail": "\"BOOBAWAVEBA\" 레벨 순위가 17위에서 13위로 변경되었습니다.",
-      "time": "2026. 10. 23."
+      "time": "2026-10-23 18:32"
+    },
+    {
+      "id": 1792747931052,
+      "type": "move",
+      "title": "First Fantasy",
+      "detail": "'BOOBAWAVEBA' 레벨의 순위 변동으로 인해 순위가 16위에서 17위로 하락하였습니다.",
+      "time": "2026-10-23 18:32"
+    },
+    {
+      "id": 1792747931051,
+      "type": "move",
+      "title": "every end by temu",
+      "detail": "'BOOBAWAVEBA' 레벨의 순위 변동으로 인해 순위가 15위에서 16위로 하락하였습니다.",
+      "time": "2026-10-23 18:32"
+    },
+    {
+      "id": 1792747931050,
+      "type": "move",
+      "title": "Just Test Map",
+      "detail": "'BOOBAWAVEBA' 레벨의 순위 변동으로 인해 순위가 14위에서 15위로 하락하였습니다.",
+      "time": "2026-10-23 18:32"
+    },
+    {
+      "id": 1792747931049,
+      "type": "move",
+      "title": "Sa Sip IL",
+      "detail": "'BOOBAWAVEBA' 레벨의 순위 변동으로 인해 순위가 13위에서 14위로 하락하였습니다.",
+      "time": "2026-10-23 18:32"
     },
     {
       "id": 1792747768151,
       "type": "move",
       "title": "Answer Me",
       "detail": "\"Answer Me\" 레벨 순위가 46위에서 47위로 변경되었습니다.",
-      "time": "2026. 10. 23."
+      "time": "2026-10-23 18:29"
+    },
+    {
+      "id": 1792747768150,
+      "type": "move",
+      "title": "the hardest wave map",
+      "detail": "'Answer Me' 레벨의 순위 변동으로 인해 순위가 47위에서 46위로 상승하였습니다.",
+      "time": "2026-10-23 18:29"
     },
     {
       "id": 1789820758949,
       "type": "add",
       "title": "20 min challenge",
       "detail": "\"20 min challenge\" 새로운 레벨이 23위에 등록되었습니다.",
-      "time": "2026. 9. 19."
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758948,
+      "type": "move",
+      "title": "the hardest wave map",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 46위에서 47위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758947,
+      "type": "move",
+      "title": "Answer Me",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 45위에서 46위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758946,
+      "type": "move",
+      "title": "LT EP2",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 44위에서 45위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758945,
+      "type": "move",
+      "title": "LT EP3",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 43위에서 44위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758944,
+      "type": "move",
+      "title": "Egg Layout",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 42위에서 43위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758943,
+      "type": "move",
+      "title": "Glide Festival",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 41위에서 42위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758942,
+      "type": "move",
+      "title": "LT EP5",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 40위에서 41위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758941,
+      "type": "move",
+      "title": "LT EP4",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 39위에서 40위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758940,
+      "type": "move",
+      "title": "LT EP6",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 38위에서 39위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758939,
+      "type": "move",
+      "title": "Slow Challenge",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 37위에서 38위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758938,
+      "type": "move",
+      "title": "JPA EP6",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 36위에서 37위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758937,
+      "type": "move",
+      "title": "JPA EP9",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 35위에서 36위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758936,
+      "type": "move",
+      "title": "LT EP7",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 34위에서 35위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758935,
+      "type": "move",
+      "title": "JPA EP3",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 33위에서 34위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758934,
+      "type": "move",
+      "title": "Trolled",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 32위에서 33위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758933,
+      "type": "move",
+      "title": "JPA EP1",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 31위에서 32위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758932,
+      "type": "move",
+      "title": "JPA EP2",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 30위에서 31위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758931,
+      "type": "move",
+      "title": "JPA EP5",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 29위에서 30위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758930,
+      "type": "move",
+      "title": "JPA EP4",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 28위에서 29위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758929,
+      "type": "move",
+      "title": "JPA EP7",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 27위에서 28위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758928,
+      "type": "move",
+      "title": "LT EP8",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 26위에서 27위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758927,
+      "type": "move",
+      "title": "JPA EP8",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 25위에서 26위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758926,
+      "type": "move",
+      "title": "Endless Dreaming",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 24위에서 25위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
+    },
+    {
+      "id": 1789820758925,
+      "type": "move",
+      "title": "PPPP",
+      "detail": "'20 min challenge' 레벨 추가로 인해 순위가 23위에서 24위로 하락하였습니다.",
+      "time": "2026-09-19 21:25"
     },
     {
       "id": 1788161674646,
       "type": "add",
       "title": "the hardest wave map",
       "detail": "\"the hardest wave map\" 새로운 레벨이 46위에 등록되었습니다.",
-      "time": "2026. 8. 31."
+      "time": "2026-08-31 16:34"
     },
     {
       "id": 1786794696417,
       "type": "add",
       "title": "jumper startpos 2",
       "detail": "\"jumper startpos 2\" 새로운 레벨이 22위에 등록되었습니다.",
-      "time": "2026. 8. 15."
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696416,
+      "type": "move",
+      "title": "Answer Me",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 44위에서 45위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696415,
+      "type": "move",
+      "title": "LT EP2",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 43위에서 44위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696414,
+      "type": "move",
+      "title": "LT EP3",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 42위에서 43위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696413,
+      "type": "move",
+      "title": "Egg Layout",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 41위에서 42위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696412,
+      "type": "move",
+      "title": "Glide Festival",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 40위에서 41위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696411,
+      "type": "move",
+      "title": "LT EP5",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 39위에서 40위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696410,
+      "type": "move",
+      "title": "LT EP4",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 38위에서 39위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696409,
+      "type": "move",
+      "title": "LT EP6",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 37위에서 38위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696408,
+      "type": "move",
+      "title": "Slow Challenge",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 36위에서 37위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696407,
+      "type": "move",
+      "title": "JPA EP6",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 35위에서 36위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696406,
+      "type": "move",
+      "title": "JPA EP9",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 34위에서 35위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696405,
+      "type": "move",
+      "title": "LT EP7",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 33위에서 34위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696404,
+      "type": "move",
+      "title": "JPA EP3",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 32위에서 33위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696403,
+      "type": "move",
+      "title": "Trolled",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 31위에서 32위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696402,
+      "type": "move",
+      "title": "JPA EP1",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 30위에서 31위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696401,
+      "type": "move",
+      "title": "JPA EP2",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 29위에서 30위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696400,
+      "type": "move",
+      "title": "JPA EP5",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 28위에서 29위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696399,
+      "type": "move",
+      "title": "JPA EP4",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 27위에서 28위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696398,
+      "type": "move",
+      "title": "JPA EP7",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 26위에서 27위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696397,
+      "type": "move",
+      "title": "LT EP8",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 25위에서 26위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696396,
+      "type": "move",
+      "title": "JPA EP8",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 24위에서 25위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696395,
+      "type": "move",
+      "title": "Endless Dreaming",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 23위에서 24위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
+    },
+    {
+      "id": 1786794696394,
+      "type": "move",
+      "title": "PPPP",
+      "detail": "'jumper startpos 2' 레벨 추가로 인해 순위가 22위에서 23위로 하락하였습니다.",
+      "time": "2026-08-15 20:51"
     },
     {
       "id": 1786718870069,
       "type": "add",
       "title": "Heart 8",
       "detail": "\"Heart 8\" 새로운 레벨이 5위에 등록되었습니다.",
-      "time": "2026. 8. 14."
+      "time": "2026-08-14 23:47"
     },
     {
       "time": "2026-08-14 13:23",
       "type": "add",
-      "title": "yaa han ge ne ga ji",
+      "title": "yaa han ge 4 ga ji",
       "detail": "19위에 새로운 레벨이 등록되었습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "Answer Me",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 43위에서 44위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 43위에서 44위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "LT EP2",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 42위에서 43위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 42위에서 43위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "LT EP3",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 41위에서 42위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 41위에서 42위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "Egg Layout",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 40위에서 41위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 40위에서 41위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "Glide Festival",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 39위에서 40위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 39위에서 40위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "LT EP5",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 38위에서 39위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 38위에서 39위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "LT EP4",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 37위에서 38위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 37위에서 38위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "LT EP6",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 36위에서 37위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 36위에서 37위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "Slow Challenge",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 35위에서 36위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 35위에서 36위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "JPA EP6",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 34위에서 35위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 34위에서 35위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "JPA EP9",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 33위에서 34위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 33위에서 34위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "LT EP7",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 32위에서 33위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 32위에서 33위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "JPA EP3",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 31위에서 32위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 31위에서 32위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "Trolled",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 30위에서 31위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 30위에서 31위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "JPA EP1",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 29위에서 30위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 29위에서 30위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "JPA EP2",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 28위에서 29위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 28위에서 29위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "JPA EP5",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 27위에서 28위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 27위에서 28위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "JPA EP4",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 26위에서 27위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 26위에서 27위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "JPA EP7",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 25위에서 26위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 25위에서 26위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "LT EP8",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 24위에서 25위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 24위에서 25위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "JPA EP8",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 23위에서 24위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 23위에서 24위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "Endless Dreaming",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 22위에서 23위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 22위에서 23위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "PPPP",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 21위에서 22위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 21위에서 22위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "Reaper Wave",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 20위에서 21위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 20위에서 21위로 하락하였습니다."
     },
     {
       "time": "2026-08-14 13:23",
       "type": "move",
       "title": "FlipBook",
-      "detail": "'yaa han ge ne ga ji' 레벨 추가로 인해 순위가 19위에서 20위로 하락하였습니다."
+      "detail": "'yaa han ge 4 ga ji' 레벨 추가로 인해 순위가 19위에서 20위로 하락하였습니다."
     },
     {
       "time": "2026-06-23 21:35",
@@ -3899,194 +4263,194 @@
     {
       "time": "2026-04-10 21:53",
       "type": "add",
-      "title": "Overrides",
+      "title": "Override",
       "detail": "7위에 새로운 레벨이 등록되었습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "Answer Me",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 37위에서 38위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 37위에서 38위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "LT EP2",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 36위에서 37위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 36위에서 37위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "LT EP3",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 35위에서 36위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 35위에서 36위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "Egg Layout",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 34위에서 35위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 34위에서 35위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "Glide Festival",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 33위에서 34위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 33위에서 34위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "LT EP5",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 32위에서 33위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 32위에서 33위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "LT EP4",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 31위에서 32위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 31위에서 32위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "LT EP6",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 30위에서 31위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 30위에서 31위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "Slow Challenge",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 29위에서 30위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 29위에서 30위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "JPA EP6",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 28위에서 29위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 28위에서 29위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "JPA EP9",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 27위에서 28위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 27위에서 28위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "LT EP7",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 26위에서 27위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 26위에서 27위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "JPA EP3",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 25위에서 26위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 25위에서 26위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "Trolled",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 24위에서 25위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 24위에서 25위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "JPA EP1",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 23위에서 24위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 23위에서 24위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "JPA EP2",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 22위에서 23위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 22위에서 23위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "JPA EP5",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 21위에서 22위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 21위에서 22위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "JPA EP4",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 20위에서 21위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 20위에서 21위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "JPA EP7",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 19위에서 20위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 19위에서 20위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "LT EP8",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 18위에서 19위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 18위에서 19위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "JPA EP8",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 17위에서 18위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 17위에서 18위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "Endless Dreaming",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 16위에서 17위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 16위에서 17위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "PPPP",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 15위에서 16위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 15위에서 16위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "Reaper Wave",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 14위에서 15위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 14위에서 15위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "FlipBook",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 13위에서 14위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 13위에서 14위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "Just Test Map",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 12위에서 13위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 12위에서 13위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "Which One?",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 11위에서 12위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 11위에서 12위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "First Fantasy",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 10위에서 11위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 10위에서 11위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "BOOBAWAVEBA",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 9위에서 10위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 9위에서 10위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "nullscube",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 8위에서 9위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 8위에서 9위로 하락하였습니다."
     },
     {
       "time": "2026-04-10 21:53",
       "type": "move",
       "title": "chocubed",
-      "detail": "'Overrides' 레벨 추가로 인해 순위가 7위에서 8위로 하락하였습니다."
+      "detail": "'Override' 레벨 추가로 인해 순위가 7위에서 8위로 하락하였습니다."
     },
     {
       "time": "2026-04-04 14:55",
@@ -4657,18 +5021,6 @@
       "type": "move",
       "title": "Just Test Map",
       "detail": "'Which One?' 레벨 추가로 인해 순위가 10위에서 11위로 하락하였습니다."
-    },
-    {
-      "time": "2026-12-14 22:04",
-      "type": "move",
-      "title": "nullscube",
-      "detail": "'BOOBAWAVEBA' 레벨 추가로 인해 순위가 2위에서 3위로 하락하였습니다."
-    },
-    {
-      "time": "2026-12-10 21:37",
-      "type": "reeval",
-      "title": "chocubed",
-      "detail": "'nullscube' 레벨의 순위 변동으로 인해 순위가 3위에서 1위로 상승하였습니다."
     },
     {
       "time": "2026-02-07 17:12",
@@ -5769,18 +6121,6 @@
       "detail": "'Slow Challenge' 레벨의 재평가로 인해 순위가 28위에서 27위로 상승하였습니다."
     },
     {
-      "time": "2026-01-20 12:54",
-      "type": "move",
-      "title": "Answer Me",
-      "detail": "'Slow Challenge' 레벨의 순위 변동으로 인해 순위가 27위에서 28위로 하락하였습니다."
-    },
-    {
-      "time": "2026-01-20 12:54",
-      "type": "reeval",
-      "title": "Slow Challenge",
-      "detail": "'Slow Challenge' 레벨의 재평가로 인해 순위가 28위에서 27위로 상승하였습니다."
-    },
-    {
       "time": "2026-01-17 21:13",
       "type": "add",
       "title": "Endless Dreaming",
@@ -5807,7 +6147,7 @@
     {
       "time": "2026-01-17 21:13",
       "type": "move",
-      "title": "Glide Fastival",
+      "title": "Glide Festival",
       "detail": "'Endless Dreaming' 레벨 추가로 인해 순위가 24위에서 25위로 하락하였습니다."
     },
     {
@@ -5951,7 +6291,7 @@
     {
       "time": "2026-01-17 21:11",
       "type": "move",
-      "title": "Glide Fastival",
+      "title": "Glide Festival",
       "detail": "'FlipBook' 레벨 추가로 인해 순위가 23위에서 24위로 하락하였습니다."
     },
     {
@@ -6051,12 +6391,6 @@
       "detail": "'FlipBook' 레벨 추가로 인해 순위가 7위에서 8위로 하락하였습니다."
     },
     {
-      "time": "2026-01-15 22:04",
-      "type": "move",
-      "title": "BOOBAWAVABA",
-      "detail": "'Stereo MadnesS EX' 레벨 추가로 인해 순위가 2위에서 3위로 하락하였습니다."
-    },
-    {
       "time": "2026-01-15 12:28",
       "type": "move",
       "title": "BOOBAWAVEBA",
@@ -6082,6 +6416,12 @@
     },
     {
       "time": "2025-12-14 22:04",
+      "type": "move",
+      "title": "nullscube",
+      "detail": "'BOOBAWAVEBA' 레벨 추가로 인해 순위가 2위에서 3위로 하락하였습니다."
+    },
+    {
+      "time": "2025-12-14 22:04",
       "type": "add",
       "title": "BOOBAWAVEBA",
       "detail": "2위에 새로운 레벨이 등록되었습니다."
@@ -6091,6 +6431,12 @@
       "type": "move",
       "title": "Reaper Wave",
       "detail": "'BOOBAWAVEBA' 레벨 추가로 인해 순위가 3위에서 4위로 하락하였습니다."
+    },
+    {
+      "time": "2025-12-10 21:37",
+      "type": "reeval",
+      "title": "chocubed",
+      "detail": "'nullscube' 레벨의 순위 변동으로 인해 순위가 3위에서 1위로 상승하였습니다."
     },
     {
       "time": "2025-12-10 21:37",
@@ -6131,7 +6477,7 @@
     {
       "time": "2025-10-11 00:00",
       "type": "add",
-      "title": "JPA EP 8",
+      "title": "JPA EP8",
       "detail": "7위에 새로운 레벨이 등록되었습니다."
     },
     {
