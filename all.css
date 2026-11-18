@@ -2059,56 +2059,6 @@ button.theme-color-chip.active,
 /* ==========================================
    v2.1 Quick Search (Native Chochin UI)
    ========================================== */
-.header .header-search-btn {
-  font-family: 'Paperozi', sans-serif;
-  font-weight: 800;
-  background: rgba(0, 0, 0, 0.5);
-  border: 3px solid rgba(255, 255, 255, 1);
-  color: #ffffff;
-  font-size: 1.5rem;
-  cursor: pointer;
-  height: 84px;
-  padding: 0 1.35rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-  white-space: nowrap;
-  border-radius: 1.25rem;
-  transition: color 0.12s ease-out, background-color 0.12s ease-out, box-shadow 0.12s ease-out, transform 0.12s ease-out;
-  flex-shrink: 0;
-}
-
-.header .header-search-btn:hover {
-  background-color: rgba(255, 255, 255, 1);
-  color: rgba(0, 0, 0, 1);
-  box-shadow: 0 0 24px rgba(255, 255, 255, 1);
-}
-
-.header .header-search-btn svg {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-.header-search-btn .search-kbd-hint {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.1rem 0.45rem;
-  border-radius: 0.45rem;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  font-size: 0.95rem;
-  line-height: 1.1;
-  color: inherit;
-}
-
-.header .header-search-btn:hover .search-kbd-hint {
-  background: rgba(0, 0, 0, 0.12);
-  border-color: rgba(0, 0, 0, 0.35);
-}
-
 .quick-search-overlay {
   position: fixed;
   inset: 0;
@@ -2440,27 +2390,6 @@ button.theme-color-chip.active,
 }
 
 @media (max-width: 960px) {
-  .header .header-search-btn {
-    height: 52px !important;
-    width: 52px !important;
-    padding: 0 !important;
-    border-width: 1.5px !important;
-    border-radius: 0.9rem !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    border-color: rgba(255, 255, 255, 0.22) !important;
-    color: #ffffff !important;
-  }
-
-  .header .header-search-btn svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .header-search-btn .search-kbd-hint,
-  .header-search-btn .search-text-label {
-    display: none;
-  }
-
   .quick-search-overlay {
     padding: 0.75rem;
   }

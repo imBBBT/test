@@ -3093,30 +3093,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // v2.1 Integrated Quick Search (Desktop & Mobile)
   // ==========================================
   function initQuickSearch() {
-    const header = document.querySelector('.header');
-    if (!header || header.querySelector('.header-search-btn')) return;
+    if (document.getElementById('quick-search-overlay')) return;
 
     const isSubLevel = (window.location.pathname || '').replace(/\\/g, '/').toLowerCase().includes('/level/');
     const prefix = isSubLevel ? '../' : '';
 
-    const searchBtn = document.createElement('button');
-    searchBtn.type = 'button';
-    searchBtn.className = 'header-search-btn';
-    searchBtn.setAttribute('aria-label', '통합 빠른 검색');
-    searchBtn.title = '통합 빠른 검색 (/ 또는 Ctrl+K)';
-    searchBtn.innerHTML = `
-      <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
-        <path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-      </svg>
-      <span class="search-text-label">검색</span>
-      <span class="search-kbd-hint">/</span>
-    `;
-
-    const optBtn = header.querySelector('.optionbutton');
-    if (optBtn) {
-      header.insertBefore(searchBtn, optBtn);
-    } else {
-      header.appendChild(searchBtn);
+    // Add quick search entry inside the existing option dropdown menu (keeps header clean on desktop & mobile)
+    const optionMenu = document.querySelector('.optionmenu');
+    let menuSearchBtn = null;
+    if (optionMenu && !optionMenu.querySelector('.option-item-search')) {
+      menuSearchBtn = document.createElement('button');
+      menuSearchBtn.type = 'button';
+      menuSearchBtn.className = 'option-item option-item-search';
+      menuSearchBtn.textContent = '통합 검색';
+      optionMenu.insertBefore(menuSearchBtn, optionMenu.firstChild);
     }
 
     const overlay = document.createElement('div');
@@ -3297,7 +3287,12 @@ document.addEventListener('DOMContentLoaded', () => {
       overlay.classList.remove('active');
     }
 
-    searchBtn.addEventListener('click', openQuickSearch);
+    if (menuSearchBtn) {
+      menuSearchBtn.addEventListener('click', () => {
+        if (optionMenu) optionMenu.classList.remove('active');
+        openQuickSearch();
+      });
+    }
     closeBtn.addEventListener('click', closeQuickSearch);
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) closeQuickSearch();
@@ -3402,11 +3397,55 @@ document.addEventListener('DOMContentLoaded', () => {
       return Object.values(fps).some(v => Number(v) > 0);
     }
 
+    function getLengthCategory(rawLength) {
+      if (!rawLength) return '';
+      const str = String(rawLength).trim().toLowerCase();
+
+      // Explicit category keyword check (excluding trailing notes in parentheses)
+      const cleanStr = str.replace(/\(.*?\)/g, '').trim();
+      if (/^(tiny|short|medium|long|xl|xxl|xxxl)$/.test(cleanStr)) {
+        return (cleanStr === 'xxl' || cleanStr === 'xxxl') ? 'xl' : cleanStr;
+      }
+
+      let totalSeconds = 0;
+      const colonMatch = cleanStr.match(/^(\d+)\s*:\s*(\d{1,2})$/);
+      if (colonMatch) {
+        totalSeconds = (parseInt(colonMatch[1], 10) || 0) * 60 + (parseInt(colonMatch[2], 10) || 0);
+      } else if (cleanStr.includes('m') || cleanStr.includes('분')) {
+        const mMatch = cleanStr.match(/(\d+)\s*(?:m|분)/i);
+        const sMatch = cleanStr.match(/(?:m|분)\s*(\d+)\s*(?:s|초)?/i) || cleanStr.match(/(\d+)\s*(?:s|초)/i);
+        if (mMatch) {
+          const minutes = parseInt(mMatch[1], 10) || 0;
+          const seconds = sMatch ? (parseInt(sMatch[1], 10) || 0) : 0;
+          totalSeconds = minutes * 60 + seconds;
+        }
+      } else {
+        const sMatch = cleanStr.match(/(\d+)/);
+        if (sMatch) {
+          totalSeconds = parseInt(sMatch[1], 10) || 0;
+        }
+      }
+
+      if (totalSeconds <= 0) {
+        if (str.includes('xl')) return 'xl';
+        if (str.includes('long')) return 'long';
+        if (str.includes('medium')) return 'medium';
+        if (str.includes('short')) return 'short';
+        if (str.includes('tiny')) return 'tiny';
+        return '';
+      }
+
+      if (totalSeconds < 20) return 'tiny';
+      if (totalSeconds <= 29) return 'short';
+      if (totalSeconds <= 59) return 'medium';
+      if (totalSeconds <= 119) return 'long';
+      return 'xl';
+    }
+
     function matchesLength(lvl, targetLen) {
       if (targetLen === 'all') return true;
-      const raw = String(lvl?.map?.length || lvl?.length || '').toLowerCase();
-      if (targetLen === 'plat') return raw.includes('plat');
-      return raw.includes(targetLen);
+      const raw = lvl?.map?.length ?? lvl?.length ?? '';
+      return getLengthCategory(raw) === targetLen;
     }
 
     function init() {
@@ -3427,12 +3466,11 @@ document.addEventListener('DOMContentLoaded', () => {
         </select>
         <select id="level-length-select" class="level-sf-select" aria-label="레벨 길이 필터">
           <option value="all">전체 길이</option>
-          <option value="tiny">Tiny</option>
-          <option value="short">Short</option>
-          <option value="medium">Medium</option>
-          <option value="long">Long</option>
-          <option value="xl">XL</option>
-          <option value="plat">Platformer</option>
+          <option value="tiny">Tiny (~19초)</option>
+          <option value="short">Short (20~29초)</option>
+          <option value="medium">Medium (30~59초)</option>
+          <option value="long">Long (1~2분)</option>
+          <option value="xl">XL (2분~)</option>
         </select>
         <div class="level-sf-chips" role="group" aria-label="상태 필터">
           <button type="button" class="level-sf-chip active" data-sf="all">전체</button>
